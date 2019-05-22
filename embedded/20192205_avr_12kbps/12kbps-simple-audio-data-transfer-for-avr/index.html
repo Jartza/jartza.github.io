@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    
+    
+
+
+    <head>
+    <link href="https://gmpg.org/xfn/11" rel="profile">
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Cache-Control" content="public" />
+<!-- Enable responsiveness on mobile devices -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="generator" content="Hugo 0.55.6" />
+
+    
+    
+    
+
+<title>12kbps data transfer for AVR using audio • Firebay Electro Plumbing</title>
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="12kbps data transfer for AVR using audio"/>
+<meta name="twitter:description" content="Note: This blog post has been originally published in Rakettitiede Oy&rsquo;s &ldquo;Rakettitiede Labs&rdquo; -blog.
+This blog post is about my adventures in implementing a stupidly simple way of transferring data over audio to AVR (and why not other embedded chips too), reaching speeds up to 12kbps with really tiny code and memory footprint, using the internal oscillator of Tiny AVR, with hardware parts that cost next to nothing.
+How it all started Once I got an idea of a wearable message badge made out from Tiny 8-pin AVR chip and an LCD-screen (TagsuTag@IndieGoGo), I wanted to make it really easy to update the contents of it, from any device you usually carry with you (not just your laptop/desktop-computer)."/>
+
+<meta property="og:title" content="12kbps data transfer for AVR using audio" />
+<meta property="og:description" content="Note: This blog post has been originally published in Rakettitiede Oy&rsquo;s &ldquo;Rakettitiede Labs&rdquo; -blog.
+This blog post is about my adventures in implementing a stupidly simple way of transferring data over audio to AVR (and why not other embedded chips too), reaching speeds up to 12kbps with really tiny code and memory footprint, using the internal oscillator of Tiny AVR, with hardware parts that cost next to nothing.
+How it all started Once I got an idea of a wearable message badge made out from Tiny 8-pin AVR chip and an LCD-screen (TagsuTag@IndieGoGo), I wanted to make it really easy to update the contents of it, from any device you usually carry with you (not just your laptop/desktop-computer)." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jartza.github.io/embedded/20192205_avr_12kbps/12kbps-simple-audio-data-transfer-for-avr/" />
+<meta property="article:published_time" content="2014-11-30T12:00:00&#43;03:00"/>
+<meta property="article:modified_time" content="2014-11-30T12:00:00&#43;03:00"/>
+
+
+    
+
+
+
+
+
+
+<link rel="stylesheet" href="/scss/hyde-hyde.6a83d62c39a364f036df4db1ecd564645635d6c7fc182425cb501218fec485f5.css" integrity="sha256-aoPWLDmjZPA2302x7NVkZFY11sf8GCQly1ASGP7EhfU=">
+
+
+<link rel="stylesheet" href="/scss/print.2744dcbf8a0b2e74f8a50e4b34e5f441be7cf93cc7de27029121c6a09f9e77bc.css" integrity="sha256-J0Tcv4oLLnT4pQ5LNOX0Qb58&#43;TzH3icCkSHGoJ&#43;ed7w=" media="print">
+
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- Icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+    <link rel="shortcut icon" href="/favicon.png">
+    
+</head>
+
+
+    <body class="theme-base-08 layout-reverse">
+    
+<div class="sidebar">
+  <div class="container ">
+    <div class="sidebar-about">
+      <span class="site__title">
+        <a href="https://jartza.github.io/">Firebay Electro Plumbing</a>
+      </span>
+      
+      
+        <div class="author-image">
+          <img src="https://www.gravatar.com/avatar/c507797965493a92552bab57cda2c08c?s=240&d=mp" class="img--circle img--headshot element--center" alt="gravatar">
+        </div>
+      
+      <p class="site__description">
+        
+      </p>
+    </div>
+    <div class="collapsible-menu">
+      <input type="checkbox" id="menuToggle">
+      <label for="menuToggle">Firebay Electro Plumbing</label>
+      <div class="menu-content">
+        <div>
+	<ul class="sidebar-nav">
+		 
+		 
+			 
+				<li>
+					<a href="/embedded/">
+						<span>Embedded</span>
+					</a>
+				</li>
+			 
+		 
+			 
+				<li>
+					<a href="/general/">
+						<span>General</span>
+					</a>
+				</li>
+			 
+		
+		</li>
+	</ul>
+</div>
+
+        <section class="social">
+	
+	<a href="https://twitter.com/jartza42" rel="me"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a>
+	
+	
+	<a href="https://facebook.com/jartza" rel="me"><i class="fab fa-facebook-f"></i></a>
+	
+	
+	<a href="https://github.com/Jartza" rel="me"><i class="fab fa-github fa-lg" aria-hidden="true"></i></a>
+	
+	
+	<a href="https://bitbucket.org/jartza" rel="me"><i class="fab fa-bitbucket fa-lg" aria-hidden="true"></i></a>
+	
+	
+	
+	
+	<a href="https://gitlab.com/jartza" rel="me"><i class="fab fa-gitlab fa-lg" aria-hidden="true"></i></a>
+	
+	
+	<a href="https://instagram.com/jartza42" rel="me"><i class="fab fa-instagram fa-lg" aria-hidden="true"></i></a>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</section>
+
+      </div>
+    </div>
+    
+
+
+  </div>
+</div>
+
+        <div class="content container">
+            
+    
+<article>
+  <header>
+    <h1>12kbps data transfer for AVR using audio</h1>
+    
+    
+<div class="post__meta">
+    
+    
+      <i class="fas fa-calendar-alt"></i> Nov 30, 2014
+    
+    
+    
+    
+    
+    <br/>
+    <i class="fas fa-clock"></i> 13 min read
+</div>
+
+
+  </header>
+  
+  
+  <div class="post">
+    
+
+<p><em>Note: This blog post has been originally published in Rakettitiede Oy&rsquo;s &ldquo;Rakettitiede Labs&rdquo; -blog.</em></p>
+
+<p><img src="images/scopedata.gif" alt="" /></p>
+
+<p>This blog post is about my adventures in implementing a stupidly simple way of transferring data over audio to <a href="http://en.wikipedia.org/wiki/Atmel_AVR">AVR</a> (and why not other embedded chips too), reaching speeds up to 12kbps with really tiny code and memory footprint, using the internal oscillator of Tiny AVR, with hardware parts that cost next to nothing.</p>
+
+<h3 id="how-it-all-started">How it all started</h3>
+
+<p>Once I got an idea of a wearable message badge made out from Tiny 8-pin AVR chip and an LCD-screen (<a href="http://igg.me/at/tagsutag">TagsuTag@IndieGoGo</a>), I wanted to make it really easy to update the contents of it, from any device you usually carry with you (not just your laptop/desktop-computer).</p>
+
+<p>Some constraints of course are set up by the Flash size (8192 bytes) and the RAM size (512 bytes) of the Attiny85 chip.</p>
+
+<p>I spent hours pondering about different transfer methods USB, UART, Bluetooth and so on, but all of those had downsides:</p>
+
+<ul>
+<li><strong>USB:</strong> Needs 2 pins, Firmware takes 1/4th of the Flash space.</li>
+<li><strong>UART:</strong> Modern computers lack serial port and you have to have an USB adapter.</li>
+<li><strong>Bluetooth:</strong> All that pairing, price and code size… argh!</li>
+<li><strong>WiFi:</strong> Too expensive and complicated for a small device like this.</li>
+</ul>
+
+<p>And on top of that, USB and UART are either simply missing or at least very hard to get to your phone or tablet.</p>
+
+<p>I even made some tests in the spirit of those <a href="http://en.wikipedia.org/wiki/Timex_Datalink">Timex watches</a> and screen blinking, but that was painfully slow.</p>
+
+<p>I then spent few minutes to think what kind of common output devices exist in cell phones, tablets, laptops and desktops and soon realized they all can play audio! Good old memories with Commodore 64 and Datassette came flowing back. I needed to try that.</p>
+
+<h3 id="ok-simple-just-code-the-modem">Ok, simple, just code the modem!</h3>
+
+<p>After heavy Googling I found out there exists <a href="http://en.wikipedia.org/wiki/Modulation">plenty of different audio modulations</a> for data-transfer purposes, it was hard to choose one. For Arduino there was ready-made FSK-audio transfer implementation, which I also tried – unfortunately it proved to be both unreliable, slow and quite a code bloat. I wanted something really simple, because my goal was to transfer data using cable from headphone-connector, not over the air. As the world wasn’t ready yet, I had to do something about it!</p>
+
+<p>I also wanted something that doesn’t suffer from the usage of internal (not so accurate) oscillator instead of external, as I wanted to save pins. So I spent days and days fiddling with different modulations, polled pins at different intervals, used timers for frequency detection and even got some slow data transferred to Attiny85, but the speed and reliability still left a lot of space for improvement. I tried adding Manchester encoding but it still wasn’t good enough. Simple solutions are usually the best and my solution wasn’t simple enough, it seemed.</p>
+
+<p>Surfing through Wikipedia I even stumbled accross the article about Morse code and that actually gave me an idea, why even play with detecting frequencies when you can just detect pulse length! I just needed way to efficiently clock the signal and tell short pulse apart from long one. A Simple way.</p>
+
+<p>I also got my first oscilloscope at this point, which was tremendous help at looking inside the signal.</p>
+
+<p>I decided to try something really simple, the transfer should begin with a “sync pulse” that’s long enough to tell apart from zeroes and ones, and which can also be used to calculate the “midpoint” between zero and one length. <strong>I made the sync pulse to be 4 times the length of the midpoint</strong>, so I could easily calculate the midpoint by using bit shift.</p>
+
+<p>Using the Timer running at 125kHz to measure pulse length and <strong>INT0</strong> on rising edge of the signal I actually got the data transfer working, with really simple hardware and good reliability. I generated the audio signal manually from python script, 16kHz 8bit mono audio, making the pulse go from 0x00 to 0xFF straight away and then dropping slowly. The results were promising and the speed was already around average of 2kbps, which was my <em>original goal</em>.</p>
+
+<p><img src="images/scopefirst.jpg" alt="" /></p>
+
+<h6 id="oscilloscope-image-showing-first-implementation-pulses-e-cursor-being-near-the-pin-trigger-point">Oscilloscope-image showing first implementation pulses. E-cursor being near the pin trigger point.</h6>
+
+<h3 id="even-better-and-simpler-idea-for-modulation">Even better and simpler idea for modulation</h3>
+
+<p>Then something made me try to make it even more simple, how about only using samples 0x00 and 0xFF in 8bit audio, effectively making it square wave with “clock” pulse for every bit! I also switched from INT0 to Pin Change Interrupt (PCINT) to measure both rising and falling edges of the signal. I shortened the pulses and got nice results until I got into sample lengths of 3, 5 and 16 samples – being zero, one and sync pulse respectively. I also decided to use both rising and falling edge to clock between bits, effectively detecting zero crossings. That averaged at around 4kbps and the code was now stupidly simple.</p>
+
+<p><img src="images/pic_22_2.gif" alt="" /></p>
+
+<h6 id="sync-pulse-and-h-as-ascii-notice-that-bits-are-reversed-00010010-01001000-again-e-cursor-is-at-logic-trigger-point">Sync pulse and “H” as ascii, notice that bits are reversed (00010010 =&gt; 01001000). Again, E-cursor is at logic trigger point.</h6>
+
+<p>Boy, was I amazed when I just started to try with different sample rates, but same sample lengths, I got up until 44.1kHz and the data speeds just kept on growing, and the transfer still being reliable – and the code “auto adapted” to higher speeds automatically, as the sync pulses got shorter! Modifying the Interrupt Vector to output received data from other pin, I soon realised the obvious, ISR has short delay before it’s getting called, so the sample lengths aren’t exactly accurate and I finally ended up with sample lengths of 3, 5 and 17, and now I could use 48kHz sample rate with the transfer speeds <strong>averaging 12kbps</strong> and still with good reliability!</p>
+
+<p><img src="images/onebyte.png" alt="" /></p>
+
+<h6 id="audio-excerpt-showing-the-single-bits-and-sync-pulse-when-sending-data">Audio excerpt, showing the single bits and sync pulse when sending data.</h6>
+
+<p>Also the sync pulses can be sent as often as you would like, if for some reason the transfer loses a bit, the rest of the data is out of sync. I tried transfer with several megabytes of data and sending 2 sync pulses after 16 bytes of data and not a single transfer error. The transfer should always begin with at least 2 sync pulses, as the timer is “running free” without data and the first sync pulse length might not be correct.</p>
+
+<h3 id="and-the-hardware-part-also-stupidly-simple">And the hardware part? Also stupidly simple.</h3>
+
+<p><img src="images/simpleskema.png" alt="" /></p>
+
+<p>It’s just a very basic biasing-circuit, the audio-signal is biased close to AVR GPIO pin logic trigger point (around 50% of VCC), with PCINT that basically acts as a Zero Crossing Detector. You don’t want to bias it exactly to 50% as there will always be some fluctuations in the signal and the AVR pin will be in “undetermined” state, consuming extra power, hence I decided to bias it to around 45% of VCC which seems to work fine. C2 is just added for some filtering, I noticed for example that some cell phones leak current to headphone connector while connected to charger, so this filters noise out.</p>
+
+<p>Of course you could use analog comparator or Op-Amp to make a real Zero Crossing Detector, or even use AVR built-in analog comparator, if you wish.</p>
+
+<p>The downside of the simple schematics is that with low volumes you get a lot of transfer errors, as sound cards generally can’t output square wave as such.</p>
+
+<p>In Tagsu I wanted to get as little transfer problems as possible, so I added “standard” audio clipping circuit using 2 very basic signal diodes (1N4148) and series resistor to prevent “direct short” to ground.</p>
+
+<p><img src="images/clipskema.png" alt="" /></p>
+
+<p>This limits the voltage swing to around +-0.75 volts, making the signal look more like square wave, and it also prevents negative voltage to AVR pins when playing with high volume, which AVR chips don’t like that much. The circuit used in Tagsu requires high volume for the modem to work at all, but I find it generally nicer to inform people to “put volume to maximum” and have reliable transfer.
+pic_0_3</p>
+
+<p><img src="images/scopedata.gif" alt="" /></p>
+
+<h6 id="data-signal-with-clipping-diodes">Data signal with clipping diodes.</h6>
+
+<h2 id="shut-up-and-take-my-money-and-give-me-teh-codes">Shut up and take my money… and give me teh codes!</h2>
+
+<p>The code referred in this post can be found from GitHub.</p>
+
+<p>The Following License applies to all code:</p>
+
+<pre><code>This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details. You should have received a copy of the GNU Lesser General Public License along with this program. If not, see &lt;http://www.gnu.org/licenses/&gt;
+</code></pre>
+
+<p>If you would like to get commercial license instead of LGPL, please contact me.</p>
+
+<p>The code example contains the modem code itself and also really really simple bitbanging SPI implementation, the main code just runs in loop and forwards any bytes received via modem to SPI as-is.</p>
+
+<h3 id="code-walkthrough">Code walkthrough</h3>
+
+<p>Okay, going through the code might explain the internals of the modem better. I will not go through the SPI-code in the repo, it’s just an example to get data out.</p>
+
+<p>Let’s start with modem header <code>modem.h</code>:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;avr/interrupt.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">/* Modem ring buffer size must be power of 2 */</span>
+<span style="color:#75715e">#define MODEM_BUFFER_SIZE   4
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">/* Modem defines */</span>
+<span style="color:#75715e">#define MODEM_SYNC_LEN      42
+</span><span style="color:#75715e">#define MODEM_TIMER     TCNT1
+</span><span style="color:#75715e">#define MODEM_PIN       PCINT3
+</span><span style="color:#75715e">#define MODEM_DDR       DDRB
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">/* Public functions */</span>
+uint8_t <span style="color:#a6e22e">modem_buffer_available</span>();
+uint8_t <span style="color:#a6e22e">modem_buffer_get</span>();
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">modem_init</span>();</code></pre></div>
+
+<p>Nothing fancy here, we set the size of the modem ring buffer, size should be power of 2 (2, 4, 8, 16…).</p>
+
+<p><strong>MODEM_SYNC_LEN</strong> is the sync-pulse minimum length, anything longer than this will get interpreted as sync pulse. We’ll get back to why this is 42 in a moment.</p>
+
+<p><strong>MODEM_PIN</strong> is now <strong>PCINT3</strong> in the example, but it can be any pin that has Pin Change Interrupt -possibility (ATTiny85 has them in all IO-pins, but other AVR chips might not).</p>
+
+<p>Next let’s look at the code itself, <code>modem.c</code>:</p>
+
+<p>Let’s start from bottom up, first the <code>modem_init()</code> -function:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#75715e">/*
+</span><span style="color:#75715e"> * Start the modem by enabling Pin Change Interrupts &amp; Timer
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">modem_init</span>()  {
+    <span style="color:#75715e">/* Modem pin as input */</span>
+    MODEM_DDR <span style="color:#f92672">&amp;=</span> <span style="color:#f92672">~</span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> MODEM_PIN);
+
+    <span style="color:#75715e">/* Enable Pin Change Interrupts and PCINT for MODEM_PIN */</span>
+    GIMSK <span style="color:#f92672">|=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> PCIE);
+    PCMSK <span style="color:#f92672">|=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> MODEM_PIN);
+
+    <span style="color:#75715e">/* Timer: TCCR1: CS10, CS11 and CS12 bits:
+</span><span style="color:#75715e">       8MHz clock with Prescaler 64
+</span><span style="color:#75715e">       = 125kHz timer clock */</span>
+    TCCR1 <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> CS10) <span style="color:#f92672">|</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> CS11) <span style="color:#f92672">|</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> CS12);
+
+    <span style="color:#75715e">/* Enable interrupts */</span>
+    sei();
+} </code></pre></div>
+
+<p>GIMSK register flag PCIE enables Pin Change Interrupts generally, PCMSK registers sets which pins are used for Pin Change Interrupt. We only enable the modem pin used.</p>
+
+<p>The modem needs timer only for pulse length calculation, so only thing we need to do is to set prescaler. I’m assuming 8MHz clock so we set the prescaler 64. 8000000 / 64 = 125000 = <strong>125kHz</strong>. This is the <strong>speed our timer ticks at</strong>.</p>
+
+<p>I wanted the modem to “auto-adapt” itself to anything between 16kHz and 48kHz sample rates. That and the timer speed also explains the <strong>MODEM_SYNC_LEN</strong> which was defined 42 earlier, remember. Let’s do some calculations:</p>
+
+<pre><code>125000 / 48000 equals around 2.6 timer ticks per sample
+125000 / 16000 equals around 7.8 timer ticks per sample
+
+@48kHz:
+3 samples equals around 8 timer ticks
+5 samples equals around 13 timer ticks
+17 samples equals around 44 timer ticks
+
+@16kHz:
+3 samples equals around 23 timer ticks
+5 samples equals around 39 timer ticks
+17 sampes equals around 133 timer ticks
+</code></pre>
+
+<p>From the calculations above we can see that the highest tick count to data is 39 ticks (16kHz), and the smallest tick count to sync is 44 ticks (48kHz). So 42 was chosen from between to leave some safety margin. Anything longer than 42 ticks must be sync pulse.</p>
+
+<p>Finally, we must enable Interrupts with sei() for our Pin Change Interrupt to work at all.</p>
+
+<p>And then let’s move on to modem <strong>ISR Vector</strong> (Interrupt vector):</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#75715e">/*
+</span><span style="color:#75715e"> * Pin Change Interrupt Vector. This is The Modem.
+</span><span style="color:#75715e"> */</span>
+ISR(PCINT0_vect) {
+    <span style="color:#75715e">/* Static variables instead of globals to keep 
+</span><span style="color:#75715e">       scope inside ISR */</span>
+    <span style="color:#66d9ef">static</span> uint8_t modem_bit <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+    <span style="color:#66d9ef">static</span> uint8_t modem_bitlen <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+    <span style="color:#66d9ef">static</span> uint8_t modem_byte <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+
+    <span style="color:#75715e">/* Read &amp; Zero Timer/Counter 1 value */</span>
+    uint8_t modem_pulselen <span style="color:#f92672">=</span> MODEM_TIMER;
+    MODEM_TIMER <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+
+    <span style="color:#75715e">/* Check if we received Start/Sync -pulse.
+</span><span style="color:#75715e">     * If yes, calculate bit signal length middle
+</span><span style="color:#75715e">     * point from pulse length.
+</span><span style="color:#75715e">     * Return from ISR immediately.
+</span><span style="color:#75715e">     */</span>
+    <span style="color:#66d9ef">if</span> (modem_pulselen <span style="color:#f92672">&gt;</span> MODEM_SYNC_LEN) {
+        modem_bitlen <span style="color:#f92672">=</span> (modem_pulselen <span style="color:#f92672">&gt;&gt;</span> <span style="color:#ae81ff">2</span>);
+        modem_bit <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+        <span style="color:#66d9ef">return</span>;
+    }
+
+    <span style="color:#75715e">/*
+</span><span style="color:#75715e">     * Shift byte and set high bit according
+</span><span style="color:#75715e">     * to the pulse length.
+</span><span style="color:#75715e">     * Long pulse = 1, Short pulse = 0
+</span><span style="color:#75715e">     */</span>
+    modem_byte <span style="color:#f92672">=</span> (modem_byte <span style="color:#f92672">&gt;&gt;</span> <span style="color:#ae81ff">1</span>)
+               <span style="color:#f92672">|</span> (modem_pulselen <span style="color:#f92672">&lt;</span> modem_bitlen <span style="color:#f92672">?</span> <span style="color:#ae81ff">0x00</span> <span style="color:#f92672">:</span> <span style="color:#ae81ff">0x80</span>);
+
+    <span style="color:#75715e">/* Check if we received complete byte and
+</span><span style="color:#75715e">       store it in ring buffer */</span>
+    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>(<span style="color:#f92672">++</span>modem_bit <span style="color:#f92672">%</span> <span style="color:#ae81ff">0x08</span>)) {
+        modem_buffer_put(modem_byte);
+    }
+}</code></pre></div>
+
+<p>So simple it hurts, right?</p>
+
+<p>We read the timer (in example TCNT1) value (tick count since last) and zero the timer value so it starts from the beginning again.</p>
+
+<p>If we get <strong>sync</strong> -pulse (longer than any known data pulse), we reset the bit counter and calculate the “middle point” between short and long pulse (<strong>divide by 4 by shifting 2 positions right</strong>), being the middle point between zero and one -bit. We also return from ISR in this point.</p>
+
+<p>If the pulse was shorter than that, it must be data bit. We just compare the tick count to calculated mid point to see if the bit was one or zero. Once we get one full byte, we add it to ring buffer.</p>
+
+<p>That’s it. The ring buffer code is quite generic one and doesn’t have anything special in it.</p>
+
+<h2 id="and-the-binary-size-you-ask">And the binary size, you ask?</h2>
+
+<pre><code>shenanigans:tagsu-avr-modem jartza$ avr-size --format=avr --mcu=attiny85 modem.o
+
+AVR Memory Usage
+----------------
+Device: attiny85
+Program:     226 bytes (2.8% Full)
+(.text + .data + .bootloader)
+
+Data:         9 bytes (1.8% Full)
+(.data + .bss + .noinit)
+</code></pre>
+
+<p>Well, that leaves us quite much Flash and RAM to other uses!</p>
+
+<p>Every bit “clocks” itself, and we can even have small fluctuations in the pulse length as we’re measuring timer ticks instead of “samples”. The modem speed can be varied between 4kbps and 12kbps (calculated average with data consisting 01010101…) just by changing the audio sample rate from 16kHz to 48kHz.</p>
+
+<p>There is also a modem.py example code in <a href="https://github.com/Jartza/tagsu-avr-modem">GitHub</a> to create wav files for testing the modem (or if you omit the wav-filename, it “prints audio” without wav-headers to stdout which you can pipe to aplay if you’re using Linux for example).</p>
+
+<h2 id="afterwords">Afterwords</h2>
+
+<p>Just after we started Tagsu IndieGogo -campaign, I talked with several people on IRC about the modem and realized that the same “modulation” or “coding” could be used to several other purposes too where timing is an essential problem. Few things came into mind:</p>
+
+<pre><code>Infrared communication links. 3/5/16 -scheme could be used also with IR
+Maybe even direct single-wire communication to other MCU without separate clock line
+</code></pre>
+
+<p>When we attended <a href="https://www.slush.org/">Slush14</a> to show Tagsu to people, many were amazed by the data update using audio – If you just want to hear how it sounds like, try the <a href="http://tagsu.io/edit">Tagsu Screen Editor</a>. I guess the “modem” sound isn’t quite dead technology yet.</p>
+
+<p><img src="images/testrig.jpg" alt="" /></p>
+
+<h6 id="test-rig-attiny85-hidden-under-test-clip-scope-and-logic-analyzator-connected-with-the-simplest-circuit-shown-above">Test rig, Attiny85 hidden under test clip, scope and logic analyzator connected with the simplest circuit shown above.</h6>
+
+<p><img src="images/spidata.png" alt="" /></p>
+
+<h6 id="output-from-spi-playing-hello-world-through-modem">Output from SPI, playing “Hello, World!” through modem :)</h6>
+
+  </div>
+  
+
+<div class="navigation navigation-single">
+    
+    
+</div>
+
+
+  
+
+  
+    
+        <div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+
+    (function () {
+    if (location.hostname === "localhost" ||
+      location.hostname === "127.0.0.1" ||
+      location.hostname === "") {
+      return;
+    }
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    var disqus_shortname = 'embember';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || 
+      document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<noscript>
+  Please enable JavaScript to view the
+  <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by
+  <span class="logo-disqus">Disqus</span>
+</a>
+
+    
+
+
+</article>
+
+
+        </div>
+        
+    
+
+<script defer src="https://use.fontawesome.com/releases/v5.5.0/js/all.js" integrity="sha384-GqVMZRt5Gn7tB9D9q7ONtcp4gtHIUEW/yG7h98J7IpE3kpi+srfFyyB/04OV6pG0" crossorigin="anonymous"></script>
+
+
+    
+    
+    <script type="text/javascript">
+        
+        hljs.initHighlightingOnLoad();
+    </script>
+    
+
+
+
+
+    
+
+
+
+    </body>
+</html>
