@@ -13,10 +13,10 @@
     
     <item>
       <title>12kbps data transfer for AVR using audio</title>
-      <link>https://jartza.github.io/embedded/20192205_avr_12kbps/12kbps-simple-audio-data-transfer-for-avr/</link>
+      <link>https://jartza.github.io/embedded/20192205/12kbps-simple-audio-data-transfer-for-avr/</link>
       <pubDate>Sun, 30 Nov 2014 12:00:00 +0300</pubDate>
       
-      <guid>https://jartza.github.io/embedded/20192205_avr_12kbps/12kbps-simple-audio-data-transfer-for-avr/</guid>
+      <guid>https://jartza.github.io/embedded/20192205/12kbps-simple-audio-data-transfer-for-avr/</guid>
       <description>Note: This blog post has been originally published in Rakettitiede Oy&amp;rsquo;s &amp;ldquo;Rakettitiede Labs&amp;rdquo; -blog.
 This blog post is about my adventures in implementing a stupidly simple way of transferring data over audio to AVR (and why not other embedded chips too), reaching speeds up to 12kbps with really tiny code and memory footprint, using the internal oscillator of Tiny AVR, with hardware parts that cost next to nothing.
 How it all started Once I got an idea of a wearable message badge made out from Tiny 8-pin AVR chip and an LCD-screen (TagsuTag@IndieGoGo), I wanted to make it really easy to update the contents of it, from any device you usually carry with you (not just your laptop/desktop-computer).</description>
