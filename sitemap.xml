@@ -9,14 +9,14 @@
   </url>
   
   <url>
-    <loc>https://jartza.github.io/posts/my-first-post/</loc>
+    <loc>https://jartza.github.io/general/</loc>
     <lastmod>2019-05-22T11:22:51+03:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://jartza.github.io/posts/</loc>
+    <loc>https://jartza.github.io/general/my-first-post/</loc>
     <lastmod>2019-05-22T11:22:51+03:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
