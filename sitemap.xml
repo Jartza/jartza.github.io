@@ -31,12 +31,55 @@
   </url>
   
   <url>
-    <loc>https://jartza.github.io/categories/</loc>
+    <loc>https://jartza.github.io/tags/</loc>
+    <lastmod>2014-11-30T12:00:00+03:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://jartza.github.io/tags/</loc>
+    <loc>https://jartza.github.io/tags/audio/</loc>
+    <lastmod>2014-11-30T12:00:00+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jartza.github.io/tags/avr/</loc>
+    <lastmod>2014-11-30T12:00:00+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jartza.github.io/tags/embedded/</loc>
+    <lastmod>2014-11-30T12:00:00+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jartza.github.io/tags/modem/</loc>
+    <lastmod>2014-11-30T12:00:00+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jartza.github.io/tags/modulation/</loc>
+    <lastmod>2014-11-30T12:00:00+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jartza.github.io/tags/tagsu/</loc>
+    <lastmod>2014-11-30T12:00:00+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jartza.github.io/tags/vbr/</loc>
+    <lastmod>2014-11-30T12:00:00+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jartza.github.io/categories/</loc>
     <priority>0</priority>
   </url>
   

@@ -6,9 +6,73 @@
     <description>Recent content in Tags on Firebay Electro Plumbing</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <lastBuildDate>Sun, 30 Nov 2014 12:00:00 +0300</lastBuildDate>
     
 	<atom:link href="https://jartza.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>audio</title>
+      <link>https://jartza.github.io/tags/audio/</link>
+      <pubDate>Sun, 30 Nov 2014 12:00:00 +0300</pubDate>
+      
+      <guid>https://jartza.github.io/tags/audio/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>avr</title>
+      <link>https://jartza.github.io/tags/avr/</link>
+      <pubDate>Sun, 30 Nov 2014 12:00:00 +0300</pubDate>
+      
+      <guid>https://jartza.github.io/tags/avr/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>embedded</title>
+      <link>https://jartza.github.io/tags/embedded/</link>
+      <pubDate>Sun, 30 Nov 2014 12:00:00 +0300</pubDate>
+      
+      <guid>https://jartza.github.io/tags/embedded/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>modem</title>
+      <link>https://jartza.github.io/tags/modem/</link>
+      <pubDate>Sun, 30 Nov 2014 12:00:00 +0300</pubDate>
+      
+      <guid>https://jartza.github.io/tags/modem/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>modulation</title>
+      <link>https://jartza.github.io/tags/modulation/</link>
+      <pubDate>Sun, 30 Nov 2014 12:00:00 +0300</pubDate>
+      
+      <guid>https://jartza.github.io/tags/modulation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tagsu</title>
+      <link>https://jartza.github.io/tags/tagsu/</link>
+      <pubDate>Sun, 30 Nov 2014 12:00:00 +0300</pubDate>
+      
+      <guid>https://jartza.github.io/tags/tagsu/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vbr</title>
+      <link>https://jartza.github.io/tags/vbr/</link>
+      <pubDate>Sun, 30 Nov 2014 12:00:00 +0300</pubDate>
+      
+      <guid>https://jartza.github.io/tags/vbr/</guid>
+      <description></description>
+    </item>
     
   </channel>
 </rss>
