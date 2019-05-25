@@ -20,18 +20,59 @@
   </url>
   
   <url>
+    <loc>https://jartza.github.io/retro/extreme_c64_refurbish/</loc>
+    <lastmod>2019-05-02T10:51:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jartza.github.io/retro/</loc>
+    <lastmod>2019-05-02T10:51:00+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jartza.github.io/tags/</loc>
+    <lastmod>2019-05-02T10:51:00+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jartza.github.io/tags/c64/</loc>
+    <lastmod>2019-05-02T10:51:00+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jartza.github.io/tags/commodore/</loc>
+    <lastmod>2019-05-02T10:51:00+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jartza.github.io/tags/refurbish/</loc>
+    <lastmod>2019-05-02T10:51:00+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jartza.github.io/tags/repair/</loc>
+    <lastmod>2019-05-02T10:51:00+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jartza.github.io/tags/retro/</loc>
+    <lastmod>2019-05-02T10:51:00+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://jartza.github.io/embedded/20192205/12kbps-simple-audio-data-transfer-for-avr/</loc>
     <lastmod>2014-11-30T12:00:00+03:00</lastmod>
   </url>
   
   <url>
     <loc>https://jartza.github.io/embedded/</loc>
-    <lastmod>2014-11-30T12:00:00+03:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://jartza.github.io/tags/</loc>
     <lastmod>2014-11-30T12:00:00+03:00</lastmod>
     <priority>0</priority>
   </url>

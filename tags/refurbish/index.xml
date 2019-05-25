@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>refurbish on Firebay Electro Plumbing</title>
+    <link>https://jartza.github.io/tags/refurbish/</link>
+    <description>Recent content in refurbish on Firebay Electro Plumbing</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 02 May 2019 10:51:00 +0300</lastBuildDate>
+    
+	<atom:link href="https://jartza.github.io/tags/refurbish/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Extreme C64 refurbishing</title>
+      <link>https://jartza.github.io/retro/extreme_c64_refurbish/</link>
+      <pubDate>Thu, 02 May 2019 10:51:00 +0300</pubDate>
+      
+      <guid>https://jartza.github.io/retro/extreme_c64_refurbish/</guid>
+      <description>&lt;p&gt;This is a story of extreme refurbishing of Commodore 64 machine I call &amp;ldquo;The Rusty British Lady&amp;rdquo;.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

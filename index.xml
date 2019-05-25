@@ -24,6 +24,15 @@ I find the short lifetime of stories in feed and the search functionality quite 
     </item>
     
     <item>
+      <title>Extreme C64 refurbishing</title>
+      <link>https://jartza.github.io/retro/extreme_c64_refurbish/</link>
+      <pubDate>Thu, 02 May 2019 10:51:00 +0300</pubDate>
+      
+      <guid>https://jartza.github.io/retro/extreme_c64_refurbish/</guid>
+      <description>&lt;p&gt;This is a story of extreme refurbishing of Commodore 64 machine I call &amp;ldquo;The Rusty British Lady&amp;rdquo;.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>12kbps data transfer for AVR using audio</title>
       <link>https://jartza.github.io/embedded/20192205/12kbps-simple-audio-data-transfer-for-avr/</link>
       <pubDate>Sun, 30 Nov 2014 12:00:00 +0300</pubDate>
