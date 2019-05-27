@@ -17,6 +17,7 @@
   <url>
     <loc>https://firebay.pelaaja.info/general/welcome-post/</loc>
     <lastmod>2019-05-22T11:22:51+03:00</lastmod>
+    <changefreq>weekly</changefreq>
   </url>
   
   <url>
@@ -34,11 +35,13 @@
   <url>
     <loc>https://firebay.pelaaja.info/retro/1541_ii_head_repair/</loc>
     <lastmod>2019-05-02T10:51:00+03:00</lastmod>
+    <changefreq>weekly</changefreq>
   </url>
   
   <url>
     <loc>https://firebay.pelaaja.info/retro/extreme_c64_refurbish/</loc>
     <lastmod>2019-05-02T10:51:00+03:00</lastmod>
+    <changefreq>weekly</changefreq>
   </url>
   
   <url>
@@ -98,6 +101,7 @@
   <url>
     <loc>https://firebay.pelaaja.info/embedded/20192205/12kbps-simple-audio-data-transfer-for-avr/</loc>
     <lastmod>2014-11-30T12:00:00+03:00</lastmod>
+    <changefreq>weekly</changefreq>
   </url>
   
   <url>
