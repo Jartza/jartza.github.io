@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Firebay Electro Plumbing</title>
@@ -6,11 +6,7 @@
     <description>Recent content on Firebay Electro Plumbing</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 May 2019 11:22:51 +0300</lastBuildDate>
-    
-	<atom:link href="https://firebay.pelaaja.info/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 22 May 2019 11:22:51 +0300</lastBuildDate><atom:link href="https://firebay.pelaaja.info/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Long time no blogging...</title>
       <link>https://firebay.pelaaja.info/general/welcome-post/</link>
@@ -18,7 +14,6 @@
       
       <guid>https://firebay.pelaaja.info/general/welcome-post/</guid>
       <description>&lt;p&gt;Welcome to Firebay Electro Plumbing -blog.&lt;/p&gt;
-
 &lt;p&gt;It has been around 11 years since my last &lt;em&gt;real&lt;/em&gt; blogging attempt and while I find Facebook to be nice platform for ad hoc -stories,
 I find the short lifetime of stories in feed and the search functionality quite lacking.&lt;/p&gt;</description>
     </item>
@@ -52,10 +47,10 @@ I find the short lifetime of stories in feed and the search functionality quite 
     
     <item>
       <title>12kbps data transfer for AVR using audio</title>
-      <link>https://firebay.pelaaja.info/embedded/20192205/12kbps-simple-audio-data-transfer-for-avr/</link>
+      <link>https://firebay.pelaaja.info/embedded/12kbps-simple-audio-data-transfer-for-avr/</link>
       <pubDate>Sun, 30 Nov 2014 12:00:00 +0300</pubDate>
       
-      <guid>https://firebay.pelaaja.info/embedded/20192205/12kbps-simple-audio-data-transfer-for-avr/</guid>
+      <guid>https://firebay.pelaaja.info/embedded/12kbps-simple-audio-data-transfer-for-avr/</guid>
       <description></description>
     </item>
     
