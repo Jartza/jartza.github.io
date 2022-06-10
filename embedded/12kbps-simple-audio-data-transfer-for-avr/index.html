@@ -60,7 +60,7 @@
   "headline": "12kbps data transfer for AVR using audio",
   "description" : "",
   "inLanguage" : "en",
-  "wordCount":  2617 ,
+  "wordCount":  2618 ,
   "datePublished" : "2014-11-30T12:00:00",
   "dateModified" : "2014-11-30T12:00:00",
   "image" : "https:\/\/firebay.pelaaja.info\/",
@@ -95,7 +95,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Firebay Electro Plumbing" />
 
-  <meta name="generator" content="Hugo 0.89.2" />
+  <meta name="generator" content="Hugo 0.100.2" />
   <link rel="alternate" href="https://firebay.pelaaja.info/index.xml" type="application/rss+xml" title="Firebay Electro Plumbing"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://firebay.pelaaja.info/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://firebay.pelaaja.info/css/syntax.css" /><link rel="stylesheet" href="https://firebay.pelaaja.info/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
@@ -347,22 +347,22 @@ Public License along with this program. If not, see &lt;http://www.gnu.org/licen
 </span><span class="lnt">24
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="cp">#include</span> <span class="cpf">&lt;avr/interrupt.h&gt;</span><span class="cp">
-</span><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
-</span><span class="cp"></span>
-<span class="cm">/* Modem ring buffer size must be power of 2 */</span>
-<span class="cp">#define MODEM_BUFFER_SIZE   4
-</span><span class="cp"></span>
-<span class="cm">/* Modem defines */</span>
-<span class="cp">#define MODEM_SYNC_LEN      42
-</span><span class="cp">#define MODEM_TIMER         TCNT1
-</span><span class="cp">#define MODEM_PIN           PCINT3
-</span><span class="cp">#define MODEM_DDR           DDRB
-</span><span class="cp"></span>
-<span class="cm">/* Public functions */</span>
-<span class="kt">uint8_t</span> <span class="nf">modem_buffer_available</span><span class="p">();</span>
-<span class="kt">uint8_t</span> <span class="nf">modem_buffer_get</span><span class="p">();</span>
-<span class="kt">void</span> <span class="nf">modem_init</span><span class="p">();</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;avr/interrupt.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="cm">/* Modem ring buffer size must be power of 2 */</span>
+</span></span><span class="line"><span class="cl"><span class="cp">#define MODEM_BUFFER_SIZE   4
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="cm">/* Modem defines */</span>
+</span></span><span class="line"><span class="cl"><span class="cp">#define MODEM_SYNC_LEN      42
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define MODEM_TIMER         TCNT1
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define MODEM_PIN           PCINT3
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define MODEM_DDR           DDRB
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="cm">/* Public functions */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">uint8_t</span> <span class="nf">modem_buffer_available</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="kt">uint8_t</span> <span class="nf">modem_buffer_get</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">modem_init</span><span class="p">();</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 <p>Nothing fancy here, we set the size of the modem ring buffer, size should be power of 2 (2, 4, 8, 16…).</p>
@@ -370,26 +370,26 @@ Public License along with this program. If not, see &lt;http://www.gnu.org/licen
 <p><strong>MODEM_PIN</strong> is now <strong>PCINT3</strong> in the example, but it can be any pin that has Pin Change Interrupt -possibility (ATTiny85 has them in all IO-pins, but other AVR chips might not).</p>
 <p>Next let’s look at the code itself, <code>modem.c</code>:</p>
 <p>Let’s start from bottom up, first the <code>modem_init()</code> -function:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="cm">/*
-</span><span class="cm"> * Start the modem by enabling Pin Change Interrupts &amp; Timer
-</span><span class="cm"> */</span>
-<span class="kt">void</span> <span class="nf">modem_init</span><span class="p">()</span>  <span class="p">{</span>
-    <span class="cm">/* Modem pin as input */</span>
-    <span class="n">MODEM_DDR</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">MODEM_PIN</span><span class="p">);</span>
-
-    <span class="cm">/* Enable Pin Change Interrupts and PCINT for MODEM_PIN */</span>
-    <span class="n">GIMSK</span> <span class="o">|=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">PCIE</span><span class="p">);</span>
-    <span class="n">PCMSK</span> <span class="o">|=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">MODEM_PIN</span><span class="p">);</span>
-
-    <span class="cm">/* Timer: TCCR1: CS10, CS11 and CS12 bits:
-</span><span class="cm">       8MHz clock with Prescaler 64
-</span><span class="cm">       = 125kHz timer clock */</span>
-    <span class="n">TCCR1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">CS10</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">CS11</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">CS12</span><span class="p">);</span>
-
-    <span class="cm">/* Enable interrupts */</span>
-    <span class="n">sei</span><span class="p">();</span>
-<span class="p">}</span> 
-</code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * Start the modem by enabling Pin Change Interrupts &amp; Timer
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">modem_init</span><span class="p">()</span>  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="cm">/* Modem pin as input */</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MODEM_DDR</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">MODEM_PIN</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/* Enable Pin Change Interrupts and PCINT for MODEM_PIN */</span>
+</span></span><span class="line"><span class="cl">    <span class="n">GIMSK</span> <span class="o">|=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">PCIE</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">PCMSK</span> <span class="o">|=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">MODEM_PIN</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/* Timer: TCCR1: CS10, CS11 and CS12 bits:
+</span></span></span><span class="line"><span class="cl"><span class="cm">       8MHz clock with Prescaler 64
+</span></span></span><span class="line"><span class="cl"><span class="cm">       = 125kHz timer clock */</span>
+</span></span><span class="line"><span class="cl">    <span class="n">TCCR1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">CS10</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">CS11</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">CS12</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/* Enable interrupts */</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sei</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> 
+</span></span></code></pre></div>
 <p>GIMSK register flag PCIE enables Pin Change Interrupts generally, PCMSK registers sets which pins are used for Pin Change Interrupt. We only enable the modem pin used.</p>
 <p>The modem needs timer only for pulse length calculation, so only thing we need to do is to set prescaler. I’m assuming 8MHz clock so we set the prescaler 64. 8000000 / 64 = 125000 = <strong>125kHz</strong>. This is the <strong>speed our timer ticks at</strong>.</p>
 <p>I wanted the modem to “auto-adapt” itself to anything between 16kHz and 48kHz sample rates. That and the timer speed also explains the <strong>MODEM_SYNC_LEN</strong> which was defined 42 earlier, remember. Let’s do some calculations:</p>
@@ -409,45 +409,45 @@ Public License along with this program. If not, see &lt;http://www.gnu.org/licen
 <p>From the calculations above we can see that the highest tick count to data is 39 ticks (16kHz), and the smallest tick count to sync is 44 ticks (48kHz). So 42 was chosen from between to leave some safety margin. Anything longer than 42 ticks must be sync pulse.</p>
 <p>Finally, we must enable Interrupts with sei() for our Pin Change Interrupt to work at all.</p>
 <p>And then let’s move on to modem <strong>ISR Vector</strong> (Interrupt vector):</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="cm">/*
-</span><span class="cm"> * Pin Change Interrupt Vector. This is The Modem.
-</span><span class="cm"> */</span>
-<span class="n">ISR</span><span class="p">(</span><span class="n">PCINT0_vect</span><span class="p">)</span> <span class="p">{</span>
-    <span class="cm">/* Static variables instead of globals to keep 
-</span><span class="cm">       scope inside ISR */</span>
-    <span class="k">static</span> <span class="kt">uint8_t</span> <span class="n">modem_bit</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="k">static</span> <span class="kt">uint8_t</span> <span class="n">modem_bitlen</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="k">static</span> <span class="kt">uint8_t</span> <span class="n">modem_byte</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-
-    <span class="cm">/* Read &amp; Zero Timer/Counter 1 value */</span>
-    <span class="kt">uint8_t</span> <span class="n">modem_pulselen</span> <span class="o">=</span> <span class="n">MODEM_TIMER</span><span class="p">;</span>
-    <span class="n">MODEM_TIMER</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-
-    <span class="cm">/* Check if we received Start/Sync -pulse.
-</span><span class="cm">     * If yes, calculate bit signal length middle
-</span><span class="cm">     * point from pulse length.
-</span><span class="cm">     * Return from ISR immediately.
-</span><span class="cm">     */</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">modem_pulselen</span> <span class="o">&gt;</span> <span class="n">MODEM_SYNC_LEN</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">modem_bitlen</span> <span class="o">=</span> <span class="p">(</span><span class="n">modem_pulselen</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">);</span>
-        <span class="n">modem_bit</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-        <span class="k">return</span><span class="p">;</span>
-    <span class="p">}</span>
-
-    <span class="cm">/*
-</span><span class="cm">     * Shift byte and set high bit according
-</span><span class="cm">     * to the pulse length.
-</span><span class="cm">     * Long pulse = 1, Short pulse = 0
-</span><span class="cm">     */</span>
-    <span class="n">modem_byte</span> <span class="o">=</span> <span class="p">(</span><span class="n">modem_byte</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">)</span>
-               <span class="o">|</span> <span class="p">(</span><span class="n">modem_pulselen</span> <span class="o">&lt;</span> <span class="n">modem_bitlen</span> <span class="o">?</span> <span class="mh">0x00</span> <span class="o">:</span> <span class="mh">0x80</span><span class="p">);</span>
-
-    <span class="cm">/* Check if we received complete byte and
-</span><span class="cm">       store it in ring buffer */</span>
-    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="o">++</span><span class="n">modem_bit</span> <span class="o">%</span> <span class="mh">0x08</span><span class="p">))</span> <span class="p">{</span>
-        <span class="n">modem_buffer_put</span><span class="p">(</span><span class="n">modem_byte</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * Pin Change Interrupt Vector. This is The Modem.
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl"><span class="n">ISR</span><span class="p">(</span><span class="n">PCINT0_vect</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="cm">/* Static variables instead of globals to keep 
+</span></span></span><span class="line"><span class="cl"><span class="cm">       scope inside ISR */</span>
+</span></span><span class="line"><span class="cl">    <span class="k">static</span> <span class="kt">uint8_t</span> <span class="n">modem_bit</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">static</span> <span class="kt">uint8_t</span> <span class="n">modem_bitlen</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">static</span> <span class="kt">uint8_t</span> <span class="n">modem_byte</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/* Read &amp; Zero Timer/Counter 1 value */</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">uint8_t</span> <span class="n">modem_pulselen</span> <span class="o">=</span> <span class="n">MODEM_TIMER</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MODEM_TIMER</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/* Check if we received Start/Sync -pulse.
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * If yes, calculate bit signal length middle
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * point from pulse length.
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * Return from ISR immediately.
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">modem_pulselen</span> <span class="o">&gt;</span> <span class="n">MODEM_SYNC_LEN</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">modem_bitlen</span> <span class="o">=</span> <span class="p">(</span><span class="n">modem_pulselen</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">modem_bit</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * Shift byte and set high bit according
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * to the pulse length.
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * Long pulse = 1, Short pulse = 0
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="n">modem_byte</span> <span class="o">=</span> <span class="p">(</span><span class="n">modem_byte</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">               <span class="o">|</span> <span class="p">(</span><span class="n">modem_pulselen</span> <span class="o">&lt;</span> <span class="n">modem_bitlen</span> <span class="o">?</span> <span class="mh">0x00</span> <span class="o">:</span> <span class="mh">0x80</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/* Check if we received complete byte and
+</span></span></span><span class="line"><span class="cl"><span class="cm">       store it in ring buffer */</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="o">++</span><span class="n">modem_bit</span> <span class="o">%</span> <span class="mh">0x08</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">modem_buffer_put</span><span class="p">(</span><span class="n">modem_byte</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div>
 <p>So simple it hurts, right?</p>
 <p>We read the timer (in example TCNT1) value (tick count since last) and zero the timer value so it starts from the beginning again.</p>
 <p>If we get <strong>sync</strong> -pulse (longer than any known data pulse), we reset the bit counter and calculate the “middle point” between short and long pulse (<strong>divide by 4 by shifting 2 positions right</strong>), being the middle point between zero and one -bit. We also return from ISR in this point.</p>
@@ -566,7 +566,7 @@ Maybe even direct single-wire communication to other MCU without separate clock 
           <div class="disqus-comments">
             <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     
@@ -621,7 +621,7 @@ Maybe even direct single-wire communication to other MCU without separate clock 
         </p>
         
         <p class="credits theme-by text-muted">
-          <a href="http://gohugo.io">Hugo v0.89.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          <a href="http://gohugo.io">Hugo v0.100.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
           
         </p>
       </div>
