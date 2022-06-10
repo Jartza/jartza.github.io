@@ -46,7 +46,7 @@
         "position": 3,
         "item": {
           "@id": "https:\/\/firebay.pelaaja.info\/embedded\/12kbps-simple-audio-data-transfer-for-avr\/",
-          "name": "12kbps data transfer for avr using audio"
+          "name": "12kbps data transfer for a v r using audio"
         }
     }]
 }
@@ -60,7 +60,7 @@
   "headline": "12kbps data transfer for AVR using audio",
   "description" : "",
   "inLanguage" : "en",
-  "wordCount":  2618 ,
+  "wordCount":  2617 ,
   "datePublished" : "2014-11-30T12:00:00",
   "dateModified" : "2014-11-30T12:00:00",
   "image" : "https:\/\/firebay.pelaaja.info\/",
@@ -95,7 +95,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Firebay Electro Plumbing" />
 
-  <meta name="generator" content="Hugo 0.100.2" />
+  <meta name="generator" content="Hugo 0.56.3" />
   <link rel="alternate" href="https://firebay.pelaaja.info/index.xml" type="application/rss+xml" title="Firebay Electro Plumbing"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://firebay.pelaaja.info/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://firebay.pelaaja.info/css/syntax.css" /><link rel="stylesheet" href="https://firebay.pelaaja.info/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
@@ -241,7 +241,7 @@ if (!doNotTrack) {
                 <span class="post-meta">
   
   
-  <i class="fas fa-calendar"></i>&nbsp;
+  <i class="fas fa-calendar"></i>&nbsp;Posted on November 30, 2014
   
   
   
@@ -267,52 +267,94 @@ if (!doNotTrack) {
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <article role="main" class="blog-post">
         <p><em>Note: This blog post has been originally published in Rakettitiede Oy&rsquo;s &ldquo;Rakettitiede Labs&rdquo; -blog.</em></p>
+
 <p>The original post got also featured <a href="https://hackaday.com/2014/11/30/transferring-audio-to-an-avr-at-12kbps/">in Hackaday</a>.</p>
-<p><img src="images/scopedata.gif" alt=""></p>
+
+<p><img src="images/scopedata.gif" alt="" /></p>
+
 <p>This blog post is about my adventures in implementing a stupidly simple way of transferring data over audio to <a href="http://en.wikipedia.org/wiki/Atmel_AVR">AVR</a> (and why not other embedded chips too), reaching speeds up to 12kbps with really tiny code and memory footprint, using the internal oscillator of Tiny AVR, with hardware parts that cost next to nothing.</p>
+
 <h3 id="how-it-all-started">How it all started</h3>
+
 <p>Once I got an idea of a wearable message badge made out from Tiny 8-pin AVR chip and an LCD-screen (<a href="http://igg.me/at/tagsutag">TagsuTag@IndieGoGo</a>), I wanted to make it really easy to update the contents of it, from any device you usually carry with you (not just your laptop/desktop-computer).</p>
+
 <p>Some constraints of course are set up by the Flash size (8192 bytes) and the RAM size (512 bytes) of the Attiny85 chip.</p>
+
 <p>I spent hours pondering about different transfer methods USB, UART, Bluetooth and so on, but all of those had downsides:</p>
+
 <ul>
 <li><strong>USB:</strong> Needs 2 pins, Firmware takes 1/4th of the Flash space.</li>
 <li><strong>UART:</strong> Modern computers lack serial port and you have to have an USB adapter.</li>
 <li><strong>Bluetooth:</strong> All that pairing, price and code size… argh!</li>
 <li><strong>WiFi:</strong> Too expensive and complicated for a small device like this.</li>
 </ul>
+
 <p>And on top of that, USB and UART are either simply missing or at least very hard to get to your phone or tablet.</p>
+
 <p>I even made some tests in the spirit of those <a href="http://en.wikipedia.org/wiki/Timex_Datalink">Timex watches</a> and screen blinking, but that was painfully slow.</p>
+
 <p>I then spent few minutes to think what kind of common output devices exist in cell phones, tablets, laptops and desktops and soon realized they all can play audio! Good old memories with Commodore 64 and Datassette came flowing back. I needed to try that.</p>
+
 <h3 id="ok-simple-just-code-the-modem">Ok, simple, just code the modem!</h3>
+
 <p>After heavy Googling I found out there exists <a href="http://en.wikipedia.org/wiki/Modulation">plenty of different audio modulations</a> for data-transfer purposes, it was hard to choose one. For Arduino there was ready-made FSK-audio transfer implementation, which I also tried – unfortunately it proved to be both unreliable, slow and quite a code bloat. I wanted something really simple, because my goal was to transfer data using cable from headphone-connector, not over the air. As the world wasn’t ready yet, I had to do something about it!</p>
+
 <p>I also wanted something that doesn’t suffer from the usage of internal (not so accurate) oscillator instead of external, as I wanted to save pins. So I spent days and days fiddling with different modulations, polled pins at different intervals, used timers for frequency detection and even got some slow data transferred to Attiny85, but the speed and reliability still left a lot of space for improvement. I tried adding Manchester encoding but it still wasn’t good enough. Simple solutions are usually the best and my solution wasn’t simple enough, it seemed.</p>
+
 <p>Surfing through Wikipedia I even stumbled accross the article about Morse code and that actually gave me an idea, why even play with detecting frequencies when you can just detect pulse length! I just needed way to efficiently clock the signal and tell short pulse apart from long one. A Simple way.</p>
+
 <p>I also got my first oscilloscope at this point, which was tremendous help at looking inside the signal.</p>
+
 <p>I decided to try something really simple, the transfer should begin with a “sync pulse” that’s long enough to tell apart from zeroes and ones, and which can also be used to calculate the “midpoint” between zero and one length. <strong>I made the sync pulse to be 4 times the length of the midpoint</strong>, so I could easily calculate the midpoint by using bit shift.</p>
+
 <p>Using the Timer running at 125kHz to measure pulse length and <strong>INT0</strong> on rising edge of the signal I actually got the data transfer working, with really simple hardware and good reliability. I generated the audio signal manually from python script, 16kHz 8bit mono audio, making the pulse go from 0x00 to 0xFF straight away and then dropping slowly. The results were promising and the speed was already around average of 2kbps, which was my <em>original goal</em>.</p>
-<p><img src="images/scopefirst.jpg" alt=""></p>
+
+<p><img src="images/scopefirst.jpg" alt="" /></p>
+
 <h6 id="oscilloscope-image-showing-first-implementation-pulses-e-cursor-being-near-the-pin-trigger-point">Oscilloscope-image showing first implementation pulses. E-cursor being near the pin trigger point.</h6>
+
 <h3 id="even-better-and-simpler-idea-for-modulation">Even better and simpler idea for modulation</h3>
+
 <p>Then something made me try to make it even more simple, how about only using samples 0x00 and 0xFF in 8bit audio, effectively making it square wave with “clock” pulse for every bit! I also switched from INT0 to Pin Change Interrupt (PCINT) to measure both rising and falling edges of the signal. I shortened the pulses and got nice results until I got into sample lengths of 3, 5 and 16 samples – being zero, one and sync pulse respectively. I also decided to use both rising and falling edge to clock between bits, effectively detecting zero crossings. That averaged at around 4kbps and the code was now stupidly simple.</p>
-<p><img src="images/pic_22_2.gif" alt=""></p>
-<h6 id="sync-pulse-and-h-as-ascii-notice-that-bits-are-reversed-00010010--01001000-again-e-cursor-is-at-logic-trigger-point">Sync pulse and “H” as ascii, notice that bits are reversed (00010010 =&gt; 01001000). Again, E-cursor is at logic trigger point.</h6>
+
+<p><img src="images/pic_22_2.gif" alt="" /></p>
+
+<h6 id="sync-pulse-and-h-as-ascii-notice-that-bits-are-reversed-00010010-01001000-again-e-cursor-is-at-logic-trigger-point">Sync pulse and “H” as ascii, notice that bits are reversed (00010010 =&gt; 01001000). Again, E-cursor is at logic trigger point.</h6>
+
 <p>Boy, was I amazed when I just started to try with different sample rates, but same sample lengths, I got up until 44.1kHz and the data speeds just kept on growing, and the transfer still being reliable – and the code “auto adapted” to higher speeds automatically, as the sync pulses got shorter! Modifying the Interrupt Vector to output received data from other pin, I soon realised the obvious, ISR has short delay before it’s getting called, so the sample lengths aren’t exactly accurate and I finally ended up with sample lengths of 3, 5 and 17, and now I could use 48kHz sample rate with the transfer speeds <strong>averaging 12kbps</strong> and still with good reliability!</p>
-<p><img src="images/onebyte.png" alt=""></p>
+
+<p><img src="images/onebyte.png" alt="" /></p>
+
 <h6 id="audio-excerpt-showing-the-single-bits-and-sync-pulse-when-sending-data">Audio excerpt, showing the single bits and sync pulse when sending data.</h6>
+
 <p>Also the sync pulses can be sent as often as you would like, if for some reason the transfer loses a bit, the rest of the data is out of sync. I tried transfer with several megabytes of data and sending 2 sync pulses after 16 bytes of data and not a single transfer error. The transfer should always begin with at least 2 sync pulses, as the timer is “running free” without data and the first sync pulse length might not be correct.</p>
+
 <h3 id="and-the-hardware-part-also-stupidly-simple">And the hardware part? Also stupidly simple.</h3>
-<p><img src="images/simpleskema.png" alt=""></p>
+
+<p><img src="images/simpleskema.png" alt="" /></p>
+
 <p>It’s just a very basic biasing-circuit, the audio-signal is biased close to AVR GPIO pin logic trigger point (around 50% of VCC), with PCINT that basically acts as a Zero Crossing Detector. You don’t want to bias it exactly to 50% as there will always be some fluctuations in the signal and the AVR pin will be in “undetermined” state, consuming extra power, hence I decided to bias it to around 45% of VCC which seems to work fine. C2 is just added for some filtering, I noticed for example that some cell phones leak current to headphone connector while connected to charger, so this filters noise out.</p>
+
 <p>Of course you could use analog comparator or Op-Amp to make a real Zero Crossing Detector, or even use AVR built-in analog comparator, if you wish.</p>
+
 <p>The downside of the simple schematics is that with low volumes you get a lot of transfer errors, as sound cards generally can’t output square wave as such.</p>
+
 <p>In Tagsu I wanted to get as little transfer problems as possible, so I added “standard” audio clipping circuit using 2 very basic signal diodes (1N4148) and series resistor to prevent “direct short” to ground.</p>
-<p><img src="images/clipskema.png" alt=""></p>
+
+<p><img src="images/clipskema.png" alt="" /></p>
+
 <p>This limits the voltage swing to around +-0.75 volts, making the signal look more like square wave, and it also prevents negative voltage to AVR pins when playing with high volume, which AVR chips don’t like that much. The circuit used in Tagsu requires high volume for the modem to work at all, but I find it generally nicer to inform people to “put volume to maximum” and have reliable transfer.</p>
-<p><img src="images/scopedata.gif" alt=""></p>
+
+<p><img src="images/scopedata.gif" alt="" /></p>
+
 <h6 id="data-signal-with-clipping-diodes">Data signal with clipping diodes.</h6>
+
 <h2 id="shut-up-and-take-my-money-and-give-me-teh-codes">Shut up and take my money… and give me teh codes!</h2>
+
 <p><a href="https://github.com/Jartza/tagsu-avr-modem">All the code referred in this post can be found from GitHub</a>.</p>
+
 <p>The Following License applies to all code:</p>
+
 <pre><code>This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU Lesser General Public License as published by the Free
 Software Foundation, either version 3 of the License, or (at your option) any
@@ -322,14 +364,20 @@ or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
 for more details. You should have received a copy of the GNU Lesser General
 Public License along with this program. If not, see &lt;http://www.gnu.org/licenses/&gt;
 </code></pre>
+
 <p>If you would like to get commercial license instead of LGPL, please contact me.</p>
+
 <p>The code example contains the modem code itself and also really really simple bitbanging SPI implementation, the main code just runs in loop and forwards any bytes received via modem to SPI as-is.</p>
+
 <h3 id="code-walkthrough">Code walkthrough</h3>
+
 <p>Okay, going through the code might explain the internals of the modem better. I will not go through the SPI-code in the repo, it’s just an example to get data out.</p>
+
 <p>Let’s start with modem header <code>modem.h</code>:</p>
+
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 9
+<pre class="chroma"><code class="language-C" data-lang="C"><span class="lnt"> 9
 </span><span class="lnt">10
 </span><span class="lnt">11
 </span><span class="lnt">12
@@ -347,52 +395,61 @@ Public License along with this program. If not, see &lt;http://www.gnu.org/licen
 </span><span class="lnt">24
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;avr/interrupt.h&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
-</span></span><span class="line"><span class="cl"><span class="cm">/* Modem ring buffer size must be power of 2 */</span>
-</span></span><span class="line"><span class="cl"><span class="cp">#define MODEM_BUFFER_SIZE   4
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
-</span></span><span class="line"><span class="cl"><span class="cm">/* Modem defines */</span>
-</span></span><span class="line"><span class="cl"><span class="cp">#define MODEM_SYNC_LEN      42
-</span></span></span><span class="line"><span class="cl"><span class="cp">#define MODEM_TIMER         TCNT1
-</span></span></span><span class="line"><span class="cl"><span class="cp">#define MODEM_PIN           PCINT3
-</span></span></span><span class="line"><span class="cl"><span class="cp">#define MODEM_DDR           DDRB
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
-</span></span><span class="line"><span class="cl"><span class="cm">/* Public functions */</span>
-</span></span><span class="line"><span class="cl"><span class="kt">uint8_t</span> <span class="nf">modem_buffer_available</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl"><span class="kt">uint8_t</span> <span class="nf">modem_buffer_get</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">modem_init</span><span class="p">();</span></span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-C" data-lang="C"><span class="cp">#include</span> <span class="cpf">&lt;avr/interrupt.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="cm">/* Modem ring buffer size must be power of 2 */</span>
+<span class="cp">#define MODEM_BUFFER_SIZE   4
+</span><span class="cp"></span>
+<span class="cm">/* Modem defines */</span>
+<span class="cp">#define MODEM_SYNC_LEN      42
+</span><span class="cp">#define MODEM_TIMER         TCNT1
+</span><span class="cp">#define MODEM_PIN           PCINT3
+</span><span class="cp">#define MODEM_DDR           DDRB
+</span><span class="cp"></span>
+<span class="cm">/* Public functions */</span>
+<span class="n">uint8_t</span> <span class="nf">modem_buffer_available</span><span class="p">();</span>
+<span class="n">uint8_t</span> <span class="nf">modem_buffer_get</span><span class="p">();</span>
+<span class="kt">void</span> <span class="nf">modem_init</span><span class="p">();</span></code></pre></td></tr></table>
 </div>
 </div>
+
 <p>Nothing fancy here, we set the size of the modem ring buffer, size should be power of 2 (2, 4, 8, 16…).</p>
+
 <p><strong>MODEM_SYNC_LEN</strong> is the sync-pulse minimum length, anything longer than this will get interpreted as sync pulse. We’ll get back to why this is 42 in a moment.</p>
+
 <p><strong>MODEM_PIN</strong> is now <strong>PCINT3</strong> in the example, but it can be any pin that has Pin Change Interrupt -possibility (ATTiny85 has them in all IO-pins, but other AVR chips might not).</p>
+
 <p>Next let’s look at the code itself, <code>modem.c</code>:</p>
+
 <p>Let’s start from bottom up, first the <code>modem_init()</code> -function:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cm">/*
-</span></span></span><span class="line"><span class="cl"><span class="cm"> * Start the modem by enabling Pin Change Interrupts &amp; Timer
-</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
-</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">modem_init</span><span class="p">()</span>  <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="cm">/* Modem pin as input */</span>
-</span></span><span class="line"><span class="cl">    <span class="n">MODEM_DDR</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">MODEM_PIN</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="cm">/* Enable Pin Change Interrupts and PCINT for MODEM_PIN */</span>
-</span></span><span class="line"><span class="cl">    <span class="n">GIMSK</span> <span class="o">|=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">PCIE</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="n">PCMSK</span> <span class="o">|=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">MODEM_PIN</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="cm">/* Timer: TCCR1: CS10, CS11 and CS12 bits:
-</span></span></span><span class="line"><span class="cl"><span class="cm">       8MHz clock with Prescaler 64
-</span></span></span><span class="line"><span class="cl"><span class="cm">       = 125kHz timer clock */</span>
-</span></span><span class="line"><span class="cl">    <span class="n">TCCR1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">CS10</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">CS11</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">CS12</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="cm">/* Enable interrupts */</span>
-</span></span><span class="line"><span class="cl">    <span class="n">sei</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span> 
-</span></span></code></pre></div>
+
+<div class="highlight"><pre class="chroma"><code class="language-C" data-lang="C"><span class="cm">/*
+</span><span class="cm"> * Start the modem by enabling Pin Change Interrupts &amp; Timer
+</span><span class="cm"> */</span>
+<span class="kt">void</span> <span class="nf">modem_init</span><span class="p">()</span>  <span class="p">{</span>
+    <span class="cm">/* Modem pin as input */</span>
+    <span class="n">MODEM_DDR</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">MODEM_PIN</span><span class="p">);</span>
+
+    <span class="cm">/* Enable Pin Change Interrupts and PCINT for MODEM_PIN */</span>
+    <span class="n">GIMSK</span> <span class="o">|=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">PCIE</span><span class="p">);</span>
+    <span class="n">PCMSK</span> <span class="o">|=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">MODEM_PIN</span><span class="p">);</span>
+
+    <span class="cm">/* Timer: TCCR1: CS10, CS11 and CS12 bits:
+</span><span class="cm">       8MHz clock with Prescaler 64
+</span><span class="cm">       = 125kHz timer clock */</span>
+    <span class="n">TCCR1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">CS10</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">CS11</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">CS12</span><span class="p">);</span>
+
+    <span class="cm">/* Enable interrupts */</span>
+    <span class="n">sei</span><span class="p">();</span>
+<span class="p">}</span> </code></pre></div>
+
 <p>GIMSK register flag PCIE enables Pin Change Interrupts generally, PCMSK registers sets which pins are used for Pin Change Interrupt. We only enable the modem pin used.</p>
+
 <p>The modem needs timer only for pulse length calculation, so only thing we need to do is to set prescaler. I’m assuming 8MHz clock so we set the prescaler 64. 8000000 / 64 = 125000 = <strong>125kHz</strong>. This is the <strong>speed our timer ticks at</strong>.</p>
+
 <p>I wanted the modem to “auto-adapt” itself to anything between 16kHz and 48kHz sample rates. That and the timer speed also explains the <strong>MODEM_SYNC_LEN</strong> which was defined 42 earlier, remember. Let’s do some calculations:</p>
+
 <pre><code>125000 / 48000 equals around 2.6 timer ticks per sample
 125000 / 16000 equals around 7.8 timer ticks per sample
 
@@ -406,54 +463,65 @@ Public License along with this program. If not, see &lt;http://www.gnu.org/licen
 5 samples equals around 39 timer ticks
 17 sampes equals around 133 timer ticks
 </code></pre>
+
 <p>From the calculations above we can see that the highest tick count to data is 39 ticks (16kHz), and the smallest tick count to sync is 44 ticks (48kHz). So 42 was chosen from between to leave some safety margin. Anything longer than 42 ticks must be sync pulse.</p>
+
 <p>Finally, we must enable Interrupts with sei() for our Pin Change Interrupt to work at all.</p>
+
 <p>And then let’s move on to modem <strong>ISR Vector</strong> (Interrupt vector):</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cm">/*
-</span></span></span><span class="line"><span class="cl"><span class="cm"> * Pin Change Interrupt Vector. This is The Modem.
-</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
-</span></span><span class="line"><span class="cl"><span class="n">ISR</span><span class="p">(</span><span class="n">PCINT0_vect</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="cm">/* Static variables instead of globals to keep 
-</span></span></span><span class="line"><span class="cl"><span class="cm">       scope inside ISR */</span>
-</span></span><span class="line"><span class="cl">    <span class="k">static</span> <span class="kt">uint8_t</span> <span class="n">modem_bit</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">static</span> <span class="kt">uint8_t</span> <span class="n">modem_bitlen</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">static</span> <span class="kt">uint8_t</span> <span class="n">modem_byte</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="cm">/* Read &amp; Zero Timer/Counter 1 value */</span>
-</span></span><span class="line"><span class="cl">    <span class="kt">uint8_t</span> <span class="n">modem_pulselen</span> <span class="o">=</span> <span class="n">MODEM_TIMER</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">MODEM_TIMER</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="cm">/* Check if we received Start/Sync -pulse.
-</span></span></span><span class="line"><span class="cl"><span class="cm">     * If yes, calculate bit signal length middle
-</span></span></span><span class="line"><span class="cl"><span class="cm">     * point from pulse length.
-</span></span></span><span class="line"><span class="cl"><span class="cm">     * Return from ISR immediately.
-</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">modem_pulselen</span> <span class="o">&gt;</span> <span class="n">MODEM_SYNC_LEN</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">modem_bitlen</span> <span class="o">=</span> <span class="p">(</span><span class="n">modem_pulselen</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">modem_bit</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="cm">/*
-</span></span></span><span class="line"><span class="cl"><span class="cm">     * Shift byte and set high bit according
-</span></span></span><span class="line"><span class="cl"><span class="cm">     * to the pulse length.
-</span></span></span><span class="line"><span class="cl"><span class="cm">     * Long pulse = 1, Short pulse = 0
-</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
-</span></span><span class="line"><span class="cl">    <span class="n">modem_byte</span> <span class="o">=</span> <span class="p">(</span><span class="n">modem_byte</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">               <span class="o">|</span> <span class="p">(</span><span class="n">modem_pulselen</span> <span class="o">&lt;</span> <span class="n">modem_bitlen</span> <span class="o">?</span> <span class="mh">0x00</span> <span class="o">:</span> <span class="mh">0x80</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="cm">/* Check if we received complete byte and
-</span></span></span><span class="line"><span class="cl"><span class="cm">       store it in ring buffer */</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="o">++</span><span class="n">modem_bit</span> <span class="o">%</span> <span class="mh">0x08</span><span class="p">))</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">modem_buffer_put</span><span class="p">(</span><span class="n">modem_byte</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div>
+
+<div class="highlight"><pre class="chroma"><code class="language-C" data-lang="C"><span class="cm">/*
+</span><span class="cm"> * Pin Change Interrupt Vector. This is The Modem.
+</span><span class="cm"> */</span>
+<span class="n">ISR</span><span class="p">(</span><span class="n">PCINT0_vect</span><span class="p">)</span> <span class="p">{</span>
+    <span class="cm">/* Static variables instead of globals to keep 
+</span><span class="cm">       scope inside ISR */</span>
+    <span class="k">static</span> <span class="n">uint8_t</span> <span class="n">modem_bit</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">static</span> <span class="n">uint8_t</span> <span class="n">modem_bitlen</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">static</span> <span class="n">uint8_t</span> <span class="n">modem_byte</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="cm">/* Read &amp; Zero Timer/Counter 1 value */</span>
+    <span class="n">uint8_t</span> <span class="n">modem_pulselen</span> <span class="o">=</span> <span class="n">MODEM_TIMER</span><span class="p">;</span>
+    <span class="n">MODEM_TIMER</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="cm">/* Check if we received Start/Sync -pulse.
+</span><span class="cm">     * If yes, calculate bit signal length middle
+</span><span class="cm">     * point from pulse length.
+</span><span class="cm">     * Return from ISR immediately.
+</span><span class="cm">     */</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">modem_pulselen</span> <span class="o">&gt;</span> <span class="n">MODEM_SYNC_LEN</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">modem_bitlen</span> <span class="o">=</span> <span class="p">(</span><span class="n">modem_pulselen</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">);</span>
+        <span class="n">modem_bit</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/*
+</span><span class="cm">     * Shift byte and set high bit according
+</span><span class="cm">     * to the pulse length.
+</span><span class="cm">     * Long pulse = 1, Short pulse = 0
+</span><span class="cm">     */</span>
+    <span class="n">modem_byte</span> <span class="o">=</span> <span class="p">(</span><span class="n">modem_byte</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">)</span>
+               <span class="o">|</span> <span class="p">(</span><span class="n">modem_pulselen</span> <span class="o">&lt;</span> <span class="n">modem_bitlen</span> <span class="o">?</span> <span class="mh">0x00</span> <span class="o">:</span> <span class="mh">0x80</span><span class="p">);</span>
+
+    <span class="cm">/* Check if we received complete byte and
+</span><span class="cm">       store it in ring buffer */</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="o">++</span><span class="n">modem_bit</span> <span class="o">%</span> <span class="mh">0x08</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">modem_buffer_put</span><span class="p">(</span><span class="n">modem_byte</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
 <p>So simple it hurts, right?</p>
+
 <p>We read the timer (in example TCNT1) value (tick count since last) and zero the timer value so it starts from the beginning again.</p>
+
 <p>If we get <strong>sync</strong> -pulse (longer than any known data pulse), we reset the bit counter and calculate the “middle point” between short and long pulse (<strong>divide by 4 by shifting 2 positions right</strong>), being the middle point between zero and one -bit. We also return from ISR in this point.</p>
+
 <p>If the pulse was shorter than that, it must be data bit. We just compare the tick count to calculated mid point to see if the bit was one or zero. Once we get one full byte, we add it to ring buffer.</p>
+
 <p>That’s it. The ring buffer code is quite generic one and doesn’t have anything special in it.</p>
+
 <h2 id="and-the-binary-size-you-ask">And the binary size, you ask?</h2>
+
 <pre><code>shenanigans:tagsu-avr-modem jartza$ avr-size --format=avr --mcu=attiny85 modem.o
 
 AVR Memory Usage
@@ -465,19 +533,30 @@ Program:     226 bytes (2.8% Full)
 Data:         9 bytes (1.8% Full)
 (.data + .bss + .noinit)
 </code></pre>
+
 <p>Well, that leaves us quite much Flash and RAM to other uses!</p>
+
 <p>Every bit “clocks” itself, and we can even have small fluctuations in the pulse length as we’re measuring timer ticks instead of “samples”. The modem speed can be varied between 4kbps and 12kbps (calculated average with data consisting 01010101…) just by changing the audio sample rate from 16kHz to 48kHz.</p>
+
 <p>There is also a modem.py example code in <a href="https://github.com/Jartza/tagsu-avr-modem">GitHub</a> to create wav files for testing the modem (or if you omit the wav-filename, it “prints audio” without wav-headers to stdout which you can pipe to aplay if you’re using Linux for example).</p>
+
 <h2 id="afterwords">Afterwords</h2>
+
 <p>Just after we started Tagsu IndieGogo -campaign, I talked with several people on IRC about the modem and realized that the same “modulation” or “coding” could be used to several other purposes too where timing is an essential problem. Few things came into mind:</p>
+
 <pre><code>Infrared communication links. 3/5/16 -scheme could be used also with IR
 Maybe even direct single-wire communication to other MCU without separate clock line
 </code></pre>
+
 <p>When we attended <a href="https://www.slush.org/">Slush14</a> to show Tagsu to people, many were amazed by the data update using audio – If you just want to hear how it sounds like, try the <a href="http://tagsu.io/edit">Tagsu Screen Editor</a>. I guess the “modem” sound isn’t quite dead technology yet.</p>
-<p><img src="images/testrig.jpg" alt=""></p>
+
+<p><img src="images/testrig.jpg" alt="" /></p>
+
 <h6 id="test-rig-attiny85-hidden-under-test-clip-scope-and-logic-analyzator-connected-with-the-simplest-circuit-shown-above">Test rig, Attiny85 hidden under test clip, scope and logic analyzator connected with the simplest circuit shown above.</h6>
-<p><img src="images/spidata.png" alt=""></p>
-<h6 id="output-from-spi-playing-hello-world-through-modem-">Output from SPI, playing “Hello, World!” through modem :)</h6>
+
+<p><img src="images/spidata.png" alt="" /></p>
+
+<h6 id="output-from-spi-playing-hello-world-through-modem">Output from SPI, playing “Hello, World!” through modem :)</h6>
 
         
           <div class="blog-tags">
@@ -566,7 +645,7 @@ Maybe even direct single-wire communication to other MCU without separate clock 
           <div class="disqus-comments">
             <div id="disqus_thread"></div>
 <script type="application/javascript">
-    window.disqus_config = function () {
+    var disqus_config = function () {
     
     
     
@@ -621,7 +700,7 @@ Maybe even direct single-wire communication to other MCU without separate clock 
         </p>
         
         <p class="credits theme-by text-muted">
-          <a href="http://gohugo.io">Hugo v0.100.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          <a href="http://gohugo.io">Hugo v0.56.3</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
           
         </p>
       </div>
