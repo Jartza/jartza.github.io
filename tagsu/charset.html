@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tagsu character set</title>
+    <meta name="description" content="Which character codes the Tagsu display shows, how much of the table is verified, and a probe you can send to a real tag." />
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="css/editor.css" />
+  </head>
+  <body>
+    <header class="bar">
+      <a class="home" href="index.html">Tagsu</a>
+      <h1>Character set</h1>
+    </header>
+
+    <nav class="toolbar">
+      <button type="button" id="probe" class="primary">Send a probe to a Tagsu</button>
+      <a href="edit.html" style="margin-left: auto">Back to the editor</a>
+    </nav>
+
+    <main>
+      <div class="prose-block">
+        <p>
+          The display is an ST7032i, so the character shapes live in the display controller
+          rather than in the firmware, and which ROM variant it is was never written down.
+          This table was read off a real badge with a camera by the
+          <a href="https://github.com/infr/tagsu">infr/tagsu</a> project
+          (<a href="https://kimsalmi.com/posts/2026/tagsu/">write-up</a>), and it agrees with
+          every check that can be made from this side.
+        </p>
+        <p>
+          All six codes the original editor translated land exactly where it put them
+          (<code>ä 0x84</code>, <code>å 0x86</code>, <code>Ä 0x8E</code>, <code>Å 0x8F</code>,
+          <code>ö 0x94</code>, <code>Ö 0x99</code>). <code>0xFB</code> and <code>0xFC</code> are
+          <code>«</code> and <code>»</code>, which is what the firmware draws either side of the
+          selected menu item. And <code>0xA0</code>–<code>0xDF</code> is the HD44780 A00 katakana
+          block, unchanged.
+        </p>
+        <p>
+          Two things to watch for, both normal for this family of controller:
+          <code>0x5C</code> shows <code>¥</code> rather than a backslash, and
+          <code>0x7E</code>/<code>0x7F</code> are <code>→</code> and <code>←</code>.
+          Codes whose character is missing from the display font are left out, because the
+          editor could not preview them.
+        </p>
+        <p id="counts" class="hint"></p>
+        <p class="legend">
+          <span class="confirmed">Verified from the firmware or the old editor</span>
+          <span class="reported">Read off a real display</span>
+          <span class="missing">Not in the display font</span>
+        </p>
+      </div>
+
+      <div id="grid"></div>
+
+      <div class="prose-block">
+        <h2 style="margin-top: 24px; font-size: 1rem">Checking it against a real Tagsu</h2>
+        <p>
+          The probe builds 14 screens, one per block of 16 codes, each showing the codes on the
+          top row and which block it is underneath. Send it to a tag and photograph the screens to confirm the table above on your own
+          hardware; any correction goes in <code>js/charmap.js</code>.
+        </p>
+      </div>
+
+      <footer>
+        <p><a href="edit.html">Screen editor</a> &middot; <a href="about.html">About Tagsu</a> &middot; &copy; Rakettitiede</p>
+      </footer>
+    </main>
+
+    <script type="module">
+      import { start } from './js/ui/charset.js';
+      start();
+    </script>
+  </body>
+</html>

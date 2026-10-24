@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tagsu screen editor</title>
+    <meta name="description" content="Write the screens your Tagsu shows, and send them over the audio cable." />
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="css/editor.css" />
+  </head>
+  <body>
+    <header class="bar">
+      <a class="home" href="index.html">Tagsu</a>
+      <h1>Screen editor</h1>
+      <div id="budget" class="budget"></div>
+    </header>
+
+    <nav class="toolbar">
+      <button type="button" id="add" class="primary">Add a screen</button>
+      <button type="button" id="update">Update to Tagsu</button>
+      <button type="button" id="cycle">Preview cycle</button>
+      <button type="button" id="new">New</button>
+      <button type="button" id="save">Save</button>
+      <button type="button" id="load">Load</button>
+      <span class="spacer"></span>
+      <label class="charset">
+        Characters
+        <span id="charset-slot"></span>
+      </label>
+    </nav>
+
+    <main>
+      <div id="summary" class="summary"></div>
+
+      <p id="empty" class="empty" hidden>
+        Nothing here yet. Add a screen to get started.
+      </p>
+
+      <div id="screens" class="screens"></div>
+
+      <footer>
+        <p>
+          Your Tagsu holds 42 screens of 16&times;2 characters and 10 custom logos.
+          Everything you type stays in this browser; nothing is uploaded.
+        </p>
+        <p>
+          <a href="charset.html">Character set reference</a> &middot;
+          <a href="about.html">About Tagsu</a> &middot;
+          &copy; Rakettitiede
+        </p>
+      </footer>
+    </main>
+
+    <script type="module">
+      import { start } from './js/ui/editor.js';
+      start();
+    </script>
+  </body>
+</html>

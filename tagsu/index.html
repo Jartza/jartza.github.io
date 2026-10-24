@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tagsu — 16x2 characters free</title>
+    <meta name="description" content="Tagsu is a programmable, wearable electronic nametag with a 16x2 character LCD. Do the tagsu man!" />
+
+    <meta property="og:title" content="tagsu.io" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://tagsu.io/" />
+    <meta property="og:image" content="https://tagsu.io/img/bg.png" />
+    <meta property="og:description" content="Do the tagsu man!" />
+
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" />
+    <link rel="stylesheet" href="css/site.css" />
+  </head>
+  <body>
+    <div id="tape"></div>
+
+    <header class="masthead">
+      <img src="img/tagsu_logo_v2.png" alt="Tagsu" />
+      <nav class="social">
+        <a id="facebook-share" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Ftagsu.io">Share</a>
+        <a id="twitter-share" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Ftagsu.io&text=Tagsu&hashtags=tagsu">Tweet</a>
+      </nav>
+    </header>
+
+    <p class="tagline">16 &times; 2 characters free</p>
+
+    <div class="console" id="console">
+      <div class="output"></div>
+      <div class="prompt">&gt;&nbsp;<span class="typed"></span><span class="cursor">&#x2588;</span></div>
+      <input type="text" class="offscreen" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-label="Console input" />
+    </div>
+
+    <div class="callouts">
+      <a href="edit.html">
+        <strong>Write your Tagsu</strong>
+        Open the screen editor and send new text over the audio cable
+      </a>
+      <a href="about.html">
+        <strong>Learn more</strong>
+        What a Tagsu is, and the full specifications
+      </a>
+      <a href="mailto:tagsu@rakettitiede.com?subject=Tagsu">
+        <strong>Contact</strong>
+        Contact us via email
+      </a>
+      <a href="https://www.facebook.com/TagsuTag" target="_blank" rel="noopener">
+        <strong>Facebook</strong>
+        Follow Tagsu
+      </a>
+      <a href="https://youtu.be/3ZH9MMPjONw" target="_blank" rel="noopener">
+        <strong>YouTube</strong>
+        Watch Tagsu in action
+      </a>
+    </div>
+
+    <p class="copyright">&copy; Rakettitiede &middot; <a href="https://rakettitiede.com">rakettitiede.com</a></p>
+
+    <script type="module">
+      import { startConsole } from './js/console.js';
+      startConsole(document.getElementById('console'));
+    </script>
+  </body>
+</html>
