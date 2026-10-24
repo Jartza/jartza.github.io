@@ -109,16 +109,31 @@ const COLOURS = {
   background: { lit: '#2158cf', dim: '#1d2b47' },
 };
 
+/** Smallest scale still legible as a dot matrix. */
+const MIN_SCALE = 2;
+
 /**
  * Draw an Lcd onto a canvas as discrete dots.
  *
  * Grid: 16 cells of 5 dots with a one-dot gap between them, two rows of 8 dots
  * with a one-dot gap between the rows.
+ *
+ * `scale` is the dot size we would like. Sixteen columns is 99 dots wide, so at
+ * scale 4 that is already 396 px and at scale 8 it is 792 px — wider than a
+ * phone. The scale is therefore reduced to whatever fits the space the canvas
+ * has, and stays a whole number so the dot grid never lands between pixels.
  */
 export function drawLcd(canvas, lcd, { scale = 4, gap = 1 } = {}) {
   const dotsWide = COLUMNS * CHAR_WIDTH + (COLUMNS - 1) * gap;
   const dotsHigh = 2 * CHAR_HEIGHT + gap;
   const pad = 2;
+
+  const available = canvas.parentElement ? canvas.parentElement.clientWidth : 0;
+  if (available > 0) {
+    const fits = Math.floor(available / (dotsWide + pad * 2));
+    scale = Math.max(MIN_SCALE, Math.min(scale, fits));
+  }
+
   const ratio = window.devicePixelRatio || 1;
   const width = (dotsWide + pad * 2) * scale;
   const height = (dotsHigh + pad * 2) * scale;

@@ -13,7 +13,6 @@ const COMMANDS = {
     'SPECS - Tagsu technical data',
     'PIC - show a picture of Tagsu',
     'ABOUT - learn more about Tagsu',
-    'BUY - how to get your own Tagsu',
     'EDIT - write new screens to your Tagsu',
     'CHARSET - which characters the display can show',
     'RAKETTITIEDE - what is Rakettitiede',
@@ -36,10 +35,6 @@ const COMMANDS = {
     'CPU speed is 8MHz. 512 bytes of RAM. 8192 bytes of Flash, of which 2048 are reserved for user data.',
     'Display is a 16x2 alphanumeric LCD. Modem speed is ~12kbps.',
   ],
-  buy: () => [
-    '',
-    'Send us email at tagsu@rakettitiede.com if you want your own Tagsu, or try the RUN command.',
-  ],
   rakettitiede: () => [
     '',
     'Rakettitiede is a Finnish IT consultancy company founded in 2011.',
@@ -52,8 +47,6 @@ const COMMANDS = {
 const ALIASES = {
   whatis: 'what',
   peek: 'what',
-  how: 'buy',
-  price: 'buy',
   who: 'rakettitiede',
 };
 

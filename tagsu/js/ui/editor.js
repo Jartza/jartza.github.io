@@ -326,7 +326,9 @@ function screenCard(screen) {
   }
 
   update();
-  return { node, update, stopAnimation };
+  // repaint redraws the canvas without rebuilding the card, so a resize cannot
+  // steal focus from whatever is being typed into.
+  return { node, update, stopAnimation, repaint: paint };
 }
 
 /* ------------------------------------------------------------- list actions */
@@ -682,6 +684,16 @@ export function start() {
     changed({ structural: true });
   });
   document.getElementById('charset-slot').append(charsetControl());
+
+  // The preview scales itself to the width it is given, so a rotation or a
+  // window resize needs a redraw at the new size.
+  let resizeTimer = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      for (const card of cards.values()) card.repaint();
+    }, 150);
+  });
 
   if (!store.available()) {
     document.getElementById('summary').append(
